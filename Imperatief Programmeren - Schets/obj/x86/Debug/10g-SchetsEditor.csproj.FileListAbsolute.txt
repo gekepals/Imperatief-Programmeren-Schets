@@ -1,0 +1,7 @@
+C:\Users\Lennart\Desktop\School\Imperatief Programmeren\Demo-cs\SchetsEditor\bin\Debug\Schets.exe
+C:\Users\Lennart\Desktop\School\Imperatief Programmeren\Demo-cs\SchetsEditor\bin\Debug\Schets.pdb
+C:\Users\Lennart\Desktop\School\Imperatief Programmeren\Demo-cs\SchetsEditor\obj\x86\Debug\10g-SchetsEditor.csprojResolveAssemblyReference.cache
+C:\Users\Lennart\Desktop\School\Imperatief Programmeren\Demo-cs\SchetsEditor\obj\x86\Debug\SchetsEditor.Properties.Resources.resources
+C:\Users\Lennart\Desktop\School\Imperatief Programmeren\Demo-cs\SchetsEditor\obj\x86\Debug\10g-SchetsEditor.csproj.GenerateResource.Cache
+C:\Users\Lennart\Desktop\School\Imperatief Programmeren\Demo-cs\SchetsEditor\obj\x86\Debug\Schets.exe
+C:\Users\Lennart\Desktop\School\Imperatief Programmeren\Demo-cs\SchetsEditor\obj\x86\Debug\Schets.pdb

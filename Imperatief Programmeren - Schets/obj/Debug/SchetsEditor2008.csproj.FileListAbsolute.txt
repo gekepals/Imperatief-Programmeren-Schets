@@ -1,0 +1,11 @@
+C:\Users\Lennart\Desktop\School\Imperatief Programmeren\Demo-cs\SchetsEditor\bin\Debug\SchetsEditor.exe
+C:\Users\Lennart\Desktop\School\Imperatief Programmeren\Demo-cs\SchetsEditor\bin\Debug\SchetsEditor.pdb
+C:\Users\Lennart\Desktop\School\Imperatief Programmeren\Demo-cs\SchetsEditor\obj\Debug\SchetsEditor2008.csprojResolveAssemblyReference.cache
+C:\Users\Lennart\Desktop\School\Imperatief Programmeren\Demo-cs\SchetsEditor\obj\Debug\SchetsEditor.Properties.Resources.resources
+C:\Users\Lennart\Desktop\School\Imperatief Programmeren\Demo-cs\SchetsEditor\obj\Debug\SchetsEditor2008.csproj.GenerateResource.Cache
+C:\Users\Lennart\Desktop\School\Imperatief Programmeren\Demo-cs\SchetsEditor\obj\Debug\SchetsEditor.exe
+C:\Users\Lennart\Desktop\School\Imperatief Programmeren\Demo-cs\SchetsEditor\obj\Debug\SchetsEditor.pdb
+C:\Users\Lennart\Documents\Visual Studio 2015\Projects\Imperatief Programmeren - Schets\Imperatief Programmeren - Schets\obj\Debug\SchetsEditor.exe
+C:\Users\Lennart\Documents\Visual Studio 2015\Projects\Imperatief Programmeren - Schets\Imperatief Programmeren - Schets\obj\Debug\SchetsEditor.pdb
+C:\Users\Lennart\Documents\GitHub\Imperatief-Programmeren-Schets\Imperatief Programmeren - Schets\obj\Debug\SchetsEditor.exe
+C:\Users\Lennart\Documents\GitHub\Imperatief-Programmeren-Schets\Imperatief Programmeren - Schets\obj\Debug\SchetsEditor.pdb
