@@ -1,1 +1,8 @@
 28-10-2016 11:45: start project
+
+02-11-2016: 1. Cirkels
+- in klasse 'SchetsWin': twee elementen toegevoegd aan array deTools, namelijk new CirkelTool() en new VolCirkelTool()
+- in Tool-hierarchie: toevoeging van twee klassen:
+	- CirkelTool als subklasse van TweepuntTool
+	- VolCirkelTool als subklasse van CirkelTool
+  Deze zijn geschreven naar het voorbeeld RechthoekTool en VolRechthoekTool

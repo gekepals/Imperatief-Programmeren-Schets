@@ -6,7 +6,7 @@ namespace SchetsEditor
 {
     public class Schets
     {
-        private Bitmap bitmap;
+        public Bitmap bitmap;
         
         public Schets()
         {
