@@ -101,7 +101,8 @@ namespace SchetsEditor
             ToolStripMenuItem menu = new ToolStripMenuItem("File");
             menu.MergeAction = MergeAction.MatchOnly;
             menu.DropDownItems.Add("Sluiten", null, this.afsluiten);
-            menu.DropDownItems.Add("Opslaan", null, SchetsOpslaan.opslaan(bmp, ));
+            menu.DropDownItems.Add("Opslaan", null, SchetsOpslaan.opslaan);
+            menu.DropDownItems.Add("Opslaan als", null, SchetsOpslaan.opslaanAls);
             menuStrip.Items.Add(menu);
         }
 
