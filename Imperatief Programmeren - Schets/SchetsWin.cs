@@ -8,7 +8,9 @@ using System.Resources;
 namespace SchetsEditor
 {
     public class SchetsWin : Form
-    {   
+    {
+        Schets schets;
+        Bitmap bmp;
         MenuStrip menuStrip;
         SchetsControl schetscontrol;
         ISchetsTool huidigeTool;
@@ -43,6 +45,9 @@ namespace SchetsEditor
 
         public SchetsWin()
         {
+            this.schets = new Schets();
+            bmp = schets.bitmap;
+
             ISchetsTool[] deTools = { new PenTool()         
                                     , new LijnTool()
                                     , new RechthoekTool()
@@ -96,6 +101,7 @@ namespace SchetsEditor
             ToolStripMenuItem menu = new ToolStripMenuItem("File");
             menu.MergeAction = MergeAction.MatchOnly;
             menu.DropDownItems.Add("Sluiten", null, this.afsluiten);
+            menu.DropDownItems.Add("Opslaan", null, SchetsOpslaan.opslaan(bmp, ));
             menuStrip.Items.Add(menu);
         }
 

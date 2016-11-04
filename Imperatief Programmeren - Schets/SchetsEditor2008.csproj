@@ -54,6 +54,7 @@
     <Compile Include="SchetsControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="SchetsOpslaan.cs" />
     <Compile Include="SchetsWin.cs">
       <SubType>Form</SubType>
     </Compile>
