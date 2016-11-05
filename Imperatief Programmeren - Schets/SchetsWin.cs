@@ -9,6 +9,7 @@ namespace SchetsEditor
 {
     public class SchetsWin : Form
     {
+        string bmptitle;
         Schets schets;
         Bitmap bmp;
         MenuStrip menuStrip;
@@ -41,6 +42,30 @@ namespace SchetsEditor
         private void afsluiten(object obj, EventArgs ea)
         {
             this.Close();
+        }
+
+        public void opslaan(object o, EventArgs ea)
+        {
+            if (bmptitle == null)
+                opslaanAls(o, ea);
+            else schrijfNaarFile(bmptitle);
+        }
+
+        public void opslaanAls(object o, EventArgs ea)
+        {
+            SaveFileDialog dialoog = new SaveFileDialog();
+            dialoog.Filter = "JPG|*.jpg|BMP|*.bmp|PNG|*.png|Alle files|*.*";
+            dialoog.Title = "Afbeelding opslaan als...";
+            if (dialoog.ShowDialog() == DialogResult.OK)
+            {
+                bmptitle = dialoog.FileName;
+                this.schrijfNaarFile(bmptitle);
+            }
+        }
+
+        public void schrijfNaarFile(string s)
+        {
+                bmp.Save(s);
         }
 
         public SchetsWin()
@@ -101,8 +126,8 @@ namespace SchetsEditor
             ToolStripMenuItem menu = new ToolStripMenuItem("File");
             menu.MergeAction = MergeAction.MatchOnly;
             menu.DropDownItems.Add("Sluiten", null, this.afsluiten);
-            menu.DropDownItems.Add("Opslaan", null, SchetsOpslaan.opslaan);
-            menu.DropDownItems.Add("Opslaan als", null, SchetsOpslaan.opslaanAls);
+            menu.DropDownItems.Add("Opslaan", null, this.opslaan);
+            menu.DropDownItems.Add("Opslaan als", null, this.opslaanAls);
             menuStrip.Items.Add(menu);
         }
 

@@ -6,3 +6,13 @@
 	- CirkelTool als subklasse van TweepuntTool
 	- VolCirkelTool als subklasse van CirkelTool
   Deze zijn geschreven naar het voorbeeld RechthoekTool en VolRechthoekTool
+
+05-11-2016: 2. Opslaanfunctie
+- Binnen klasse SchetsWin enkele methodes toegevoegd, namelijk:
+	- opslaan --> die opslaat over een al bestaande file, of doorverwijst naar methode opslaanAls
+	- opslaanAls --> die de gebruiker om een naam en filetype vraagt, en vervolgens de afbeelding opslaat door te verwijzen naar methode schrijfNaarFile
+	- schrijfNaarFile --> die het eigenlijke opslaan-werk doet
+- In de klasse SchetsWin in de methode MaakFileMenu twee items toegevoegd aan het filemenu:
+	- 'Opslaan', die de methode opslaan aanroept
+	- 'Opslaan als' die de methode opslaanAls aanroept
+- 1 variabele binnen de klasse SchetsWin toegevoegd, namelijk de string bmptitle
