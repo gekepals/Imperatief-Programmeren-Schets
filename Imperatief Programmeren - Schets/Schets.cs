@@ -90,7 +90,6 @@ namespace SchetsEditor
                             break;
                         default:
                             return;
-
                     }
                 }
             }

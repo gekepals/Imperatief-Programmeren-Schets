@@ -19,6 +19,8 @@ namespace SchetsEditor
         ISchetsTool huidigeTool;
         Panel paneel;
         bool vast;
+        bool opgeslagen;
+        public int lijndikte;
 
         ResourceManager resourcemanager
             = new ResourceManager("SchetsEditor.Properties.Resources"
@@ -44,7 +46,10 @@ namespace SchetsEditor
 
         private void afsluiten(object obj, EventArgs ea)
         {
-            this.Close();
+            if (opgeslagen == false)
+                nietOpgeslagen(obj, ea);
+            else
+                this.Close();
         }
 
         public SchetsWin()
@@ -72,7 +77,8 @@ namespace SchetsEditor
             schetscontrol = new SchetsControl();
             schetscontrol.Location = new Point(64, 10);
             schetscontrol.MouseDown += (object o, MouseEventArgs mea) =>
-                                       {   vast=true;  
+                                       {   vast=true;
+                                           opgeslagen = false;  
                                            huidigeTool.MuisVast(schetscontrol, mea.Location); 
                                        };
             schetscontrol.MouseMove += (object o, MouseEventArgs mea) =>
@@ -165,7 +171,7 @@ namespace SchetsEditor
             paneel.Size = new Size(600, 24);
             this.Controls.Add(paneel);
             
-            Button b; Label l; ComboBox cbb;
+            Button b; Label l; ComboBox cbb; TextBox t;
             b = new Button(); 
             b.Text = "Clear";  
             b.Location = new Point(  0, 0); 
@@ -191,6 +197,27 @@ namespace SchetsEditor
                 cbb.Items.Add(k);
             cbb.SelectedIndex = 0;
             paneel.Controls.Add(cbb);
+
+            l = new Label();
+            l.Text = "Lijndikte:";
+            l.Location = new Point(370, 3);
+            l.AutoSize = true;
+            paneel.Controls.Add(l);
+
+            t = new TextBox();
+            t.Location = new Point(430, 0);
+            t.Size = new Size(40, 10);
+            t.AutoSize = true;
+            if (int.TryParse(t.Text, out lijndikte))
+                lijndikte = int.Parse(t.Text);
+            paneel.Controls.Add(t);
+
+            b = new Button();
+            b.Text = "OK";
+            b.Location = new Point(480, 0);
+            b.Size = new Size(40, 20);
+            b.Click += schetscontrol.VeranderLijndikte;
+            paneel.Controls.Add(b);
         }
 
         public void opslaan(object o, EventArgs ea)
@@ -215,6 +242,7 @@ namespace SchetsEditor
         public void schrijfNaarFile(string s)
         {
             bmp.Save(s);
+            opgeslagen = true;
         }
 
         private void openen(object o, EventArgs ea)
@@ -226,6 +254,15 @@ namespace SchetsEditor
             {
                 schets.bitmap = (Bitmap)Bitmap.FromFile(open.FileName);
             }
+        }
+
+        private void nietOpgeslagen(object o, EventArgs ea)
+        {
+            DialogResult dialoog = MessageBox.Show("Weet je zeker dat je wilt afsluiten? Er zijn niet-opgeslagen veranderingen.", "Exit", MessageBoxButtons.YesNo);
+            if (dialoog == DialogResult.Yes)
+                this.Close();
+            else if (dialoog == DialogResult.No)
+                return;
         }
     }
 }

@@ -21,3 +21,15 @@
 07-11-2016: 3. Het nieuwe gummen - opzet
 - nieuwe methode toegevoegd aan de klasse Schets, namelijk de methode leesFile. Deze methode leest een file in, en roept op basis daarvan bijpassende methoden uit de ToolKlassen aan
 - deze methode wordt aangeroepen in de klasse SchetsWin
+
+07-11-2016: aanpassingen
+- waarschuwing niet-opgeslagen file toegevoegd:
+	- bool 'opgeslagen' in SchetsWin aangemaakt: alleen true als is opgeslagen, weer false als er getekend is
+	- nieuwe methode nietOpgeslagen die een messagebox aan de gebruiker toont
+	- op basis van de waarde van bool 'opgeslagen' roept de methode afsluiten in SchetsWin de methode nietOpgeslagen wel of niet aan
+> note: werkt alleen als je de file afsluit via 'afsluiten' in menu, niet als je op het kruisje klikt (lukt niet)
+- poging tot mogelijkheid om lijndikte aan te passen:
+	- in SchetsWin, nieuw label, tekstbox en OK-button voor de invoer
+	- in SchetsControl, nieuwe methode 'VeranderLijndikte' die de ingevoerde waarde van de tekstbox neemt
+	- variabele lijndikte toegevoegd in de toolklassen, op basis van de uitkomst van VeranderLijndikte
+> note: werkt niet. Toont nu bij elke klik op OK de waarschuwings-tekstbox
