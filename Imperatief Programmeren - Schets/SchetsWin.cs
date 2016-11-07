@@ -4,6 +4,8 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Reflection;
 using System.Resources;
+using System.IO;
+using SchetsEditor;
 
 namespace SchetsEditor
 {
@@ -17,6 +19,7 @@ namespace SchetsEditor
         ISchetsTool huidigeTool;
         Panel paneel;
         bool vast;
+
         ResourceManager resourcemanager
             = new ResourceManager("SchetsEditor.Properties.Resources"
                                  , Assembly.GetExecutingAssembly()
@@ -44,34 +47,11 @@ namespace SchetsEditor
             this.Close();
         }
 
-        public void opslaan(object o, EventArgs ea)
-        {
-            if (bmptitle == null)
-                opslaanAls(o, ea);
-            else schrijfNaarFile(bmptitle);
-        }
-
-        public void opslaanAls(object o, EventArgs ea)
-        {
-            SaveFileDialog dialoog = new SaveFileDialog();
-            dialoog.Filter = "JPG|*.jpg|BMP|*.bmp|PNG|*.png|Alle files|*.*";
-            dialoog.Title = "Afbeelding opslaan als...";
-            if (dialoog.ShowDialog() == DialogResult.OK)
-            {
-                bmptitle = dialoog.FileName;
-                this.schrijfNaarFile(bmptitle);
-            }
-        }
-
-        public void schrijfNaarFile(string s)
-        {
-                bmp.Save(s);
-        }
-
         public SchetsWin()
         {
             this.schets = new Schets();
             bmp = schets.bitmap;
+            schets.leesFile("../../Tekenelementen.txt");
 
             ISchetsTool[] deTools = { new PenTool()         
                                     , new LijnTool()
@@ -125,9 +105,10 @@ namespace SchetsEditor
         {   
             ToolStripMenuItem menu = new ToolStripMenuItem("File");
             menu.MergeAction = MergeAction.MatchOnly;
-            menu.DropDownItems.Add("Sluiten", null, this.afsluiten);
+            menu.DropDownItems.Add("Open", null, this.openen);
             menu.DropDownItems.Add("Opslaan", null, this.opslaan);
             menu.DropDownItems.Add("Opslaan als", null, this.opslaanAls);
+            menu.DropDownItems.Add("Sluiten", null, this.afsluiten);
             menuStrip.Items.Add(menu);
         }
 
@@ -210,6 +191,41 @@ namespace SchetsEditor
                 cbb.Items.Add(k);
             cbb.SelectedIndex = 0;
             paneel.Controls.Add(cbb);
+        }
+
+        public void opslaan(object o, EventArgs ea)
+        {
+            if (bmptitle == null)
+                opslaanAls(o, ea);
+            else schrijfNaarFile(bmptitle);
+        }
+
+        public void opslaanAls(object o, EventArgs ea)
+        {
+            SaveFileDialog dialoog = new SaveFileDialog();
+            dialoog.Filter = "JPG|*.jpg|BMP|*.bmp|PNG|*.png|Alle files|*.*";
+            dialoog.Title = "Afbeelding opslaan als...";
+            if (dialoog.ShowDialog() == DialogResult.OK)
+            {
+                bmptitle = dialoog.FileName;
+                this.schrijfNaarFile(bmptitle);
+            }
+        }
+
+        public void schrijfNaarFile(string s)
+        {
+            bmp.Save(s);
+        }
+
+        private void openen(object o, EventArgs ea)
+        {
+            OpenFileDialog open = new OpenFileDialog();
+            open.Filter = "JPG|*.jpg|BMP|*.bmp|PNG|*.png|Alle files|*.*";
+            open.Title = "Open...";
+            if (open.ShowDialog() == DialogResult.OK)
+            {
+                schets.bitmap = (Bitmap)Bitmap.FromFile(open.FileName);
+            }
         }
     }
 }

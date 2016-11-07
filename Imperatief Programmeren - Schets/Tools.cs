@@ -80,7 +80,10 @@ namespace SchetsEditor
         public override void Letter(SchetsControl s, char c)
         {
         }
-        public abstract void Bezig(Graphics g, Point p1, Point p2);
+        public virtual void Bezig(Graphics g, Point p1, Point p2)
+        {
+            g.DrawRectangle(MaakPen(kwast, 3), TweepuntTool.Punten2Rechthoek(p1, p2));
+        }
         
         public virtual void Compleet(Graphics g, Point p1, Point p2)
         {   this.Bezig(g, p1, p2);

@@ -6,7 +6,7 @@ using System.IO;
 
 namespace SchetsEditor
 {   public class SchetsControl : UserControl
-    {   private Schets schets;
+    {   public Schets schets;
         private Color penkleur;
 
         public Color PenKleur

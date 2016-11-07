@@ -12,7 +12,12 @@
 	- opslaan --> die opslaat over een al bestaande file, of doorverwijst naar methode opslaanAls
 	- opslaanAls --> die de gebruiker om een naam en filetype vraagt, en vervolgens de afbeelding opslaat door te verwijzen naar methode schrijfNaarFile
 	- schrijfNaarFile --> die het eigenlijke opslaan-werk doet
+	- openen --> opent een opgeslagen file door een dialoog-window te openen waarin de gebruiker uit files kan kiezen
 - In de klasse SchetsWin in de methode MaakFileMenu twee items toegevoegd aan het filemenu:
 	- 'Opslaan', die de methode opslaan aanroept
 	- 'Opslaan als' die de methode opslaanAls aanroept
 - 1 variabele binnen de klasse SchetsWin toegevoegd, namelijk de string bmptitle
+
+07-11-2016: 3. Het nieuwe gummen - opzet
+- nieuwe methode toegevoegd aan de klasse Schets, namelijk de methode leesFile. Deze methode leest een file in, en roept op basis daarvan bijpassende methoden uit de ToolKlassen aan
+- deze methode wordt aangeroepen in de klasse SchetsWin

@@ -1,0 +1,4 @@
+rechthoek	100 125	220 270	Red
+lijn		50 75	75 100	Yellow
+rechthoek	50 75	70 100	Red
+grechthoek	70 70	150 150	Black
