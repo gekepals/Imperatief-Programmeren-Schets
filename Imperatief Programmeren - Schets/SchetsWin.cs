@@ -57,11 +57,13 @@ namespace SchetsEditor
             this.schets = new Schets();
             bmp = schets.bitmap;
             schets.leesFile("../../Tekenelementen.txt");
+            Point p1 = new Point(20, 30);
+            Point p2 = new Point(100, 130);
 
-            ISchetsTool[] deTools = { new PenTool()         
+            ISchetsTool[] deTools = { new PenTool()
                                     , new LijnTool()
-                                    , new RechthoekTool()
-                                    , new VolRechthoekTool()
+                                    , new RechthoekTool(null, p1, p2)
+                                    //, new VolRechthoekTool()
                                     , new CirkelTool()
                                     , new VolCirkelTool()
                                     , new TekstTool()
@@ -241,9 +243,10 @@ namespace SchetsEditor
 
         public void schrijfNaarFile(string s)
         {
+            
             bmp.Save(s);
             opgeslagen = true;
-        }
+        }     
 
         private void openen(object o, EventArgs ea)
         {

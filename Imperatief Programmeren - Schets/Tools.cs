@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Windows.Forms;
+using System.Collections.Generic;
 
 namespace SchetsEditor
 {
+
     public interface ISchetsTool
     {
         void MuisVast(SchetsControl s, Point p);
@@ -92,15 +95,24 @@ namespace SchetsEditor
 
     public class RechthoekTool : TweepuntTool
     {
-        public override string ToString() { return "kader"; }
+        public string Naam;
+        public Point Plek1, Plek2; 
 
+        public RechthoekTool(string naam, Point p1, Point p2)
+        {
+            this.Naam = naam;
+            this.Plek1 = p1;
+            this.Plek2 = p2;
+        }
+
+        public override string ToString() { return Naam; }
+    
         public override void Bezig(Graphics g, Point p1, Point p2)
         {
-            SchetsControl s = new SchetsControl();
-            g.DrawRectangle(MaakPen(kwast, s.lijndikte), TweepuntTool.Punten2Rechthoek(p1, p2));
+            g.DrawRectangle(MaakPen(kwast, 3), TweepuntTool.Punten2Rechthoek(Plek1, Plek2));
         }
     }
-    
+    /*
     public class VolRechthoekTool : RechthoekTool
     {
         public override string ToString() { return "vlak"; }
@@ -109,6 +121,7 @@ namespace SchetsEditor
         {   g.FillRectangle(kwast, TweepuntTool.Punten2Rechthoek(p1, p2));
         }
     }
+    */
 
     public class CirkelTool : TweepuntTool
     {
@@ -116,8 +129,7 @@ namespace SchetsEditor
 
         public override void Bezig(Graphics g, Point p1, Point p2)
         {
-            SchetsControl s = new SchetsControl();
-            g.DrawEllipse(MaakPen(kwast, s.lijndikte), TweepuntTool.Punten2Rechthoek(p1, p2));
+            g.DrawEllipse(MaakPen(kwast, 3), TweepuntTool.Punten2Rechthoek(p1, p2));
         }
     }
 
@@ -137,8 +149,7 @@ namespace SchetsEditor
 
         public override void Bezig(Graphics g, Point p1, Point p2)
         {
-            SchetsControl s = new SchetsControl();
-            g.DrawLine(MaakPen(this.kwast, s.lijndikte), p1, p2);
+            g.DrawLine(MaakPen(this.kwast, 3), p1, p2);
         }
     }
 

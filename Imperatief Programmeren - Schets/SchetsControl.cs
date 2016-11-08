@@ -3,12 +3,14 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 using System.IO;
+using System.Collections.Generic;
 
 namespace SchetsEditor
 {   public class SchetsControl : UserControl
     {   public Schets schets;
         private Color penkleur;
         public int lijndikte;
+        public string filenaam = "../../Tekenelementen.txt";
 
         public Color PenKleur
         { get { return penkleur; }
@@ -65,5 +67,32 @@ namespace SchetsEditor
             else
                 MessageBox.Show("Voer een geldige waarde in!");
         }
+
+        List<RechthoekTool> rechthoeken = new List<RechthoekTool>();
+
+        public void tekenRechthoek(string s, Point p1, Point p2)
+        {
+            rechthoeken.Add(new RechthoekTool(s, p1, p2));
+        }
+
+        public void schrijfNaarFileString(object o, EventArgs ea)
+        {
+            StreamWriter sw = new StreamWriter(filenaam);
+            foreach (RechthoekTool R in rechthoeken)
+                sw.WriteLine(R.ToString());
+            sw.Close();
+        }
+        /*
+        public void inlezen(object o, EventArgs ea)
+        {
+            rechthoeken.Clear();
+            StreamReader sr = new StreamReader(filenaam);
+            string regel;
+            while ((regel = sr.ReadLine()) != null)
+                rechthoeken.Add(new RechthoekTool());
+            sr.Close();
+            this.Invalidate();
+        }
+        */
     }
 }
