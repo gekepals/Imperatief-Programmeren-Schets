@@ -6,8 +6,9 @@ using System.IO;
 
 namespace SchetsEditor
 {   public class SchetsControl : UserControl
-    {   private Schets schets;
+    {   public Schets schets;
         private Color penkleur;
+        public int lijndikte;
 
         public Color PenKleur
         { get { return penkleur; }
@@ -53,6 +54,16 @@ namespace SchetsEditor
         public void VeranderKleurViaMenu(object obj, EventArgs ea)
         {   string kleurNaam = ((ToolStripMenuItem)obj).Text;
             penkleur = Color.FromName(kleurNaam);
+        }
+
+        public void VeranderLijndikte(object obj, EventArgs ea)
+        {
+            SchetsWin schetswin = new SchetsWin();
+            lijndikte = 3;
+            if (schetswin.lijndikte > 0 && schetswin.lijndikte < 20)
+                lijndikte = schetswin.lijndikte;
+            else
+                MessageBox.Show("Voer een geldige waarde in!");
         }
     }
 }

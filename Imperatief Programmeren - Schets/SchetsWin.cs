@@ -4,11 +4,14 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Reflection;
 using System.Resources;
+using System.IO;
+using SchetsEditor;
 
 namespace SchetsEditor
 {
     public class SchetsWin : Form
     {
+        string bmptitle;
         Schets schets;
         Bitmap bmp;
         MenuStrip menuStrip;
@@ -16,6 +19,9 @@ namespace SchetsEditor
         ISchetsTool huidigeTool;
         Panel paneel;
         bool vast;
+        bool opgeslagen;
+        public int lijndikte;
+
         ResourceManager resourcemanager
             = new ResourceManager("SchetsEditor.Properties.Resources"
                                  , Assembly.GetExecutingAssembly()
@@ -40,13 +46,17 @@ namespace SchetsEditor
 
         private void afsluiten(object obj, EventArgs ea)
         {
-            this.Close();
+            if (opgeslagen == false)
+                nietOpgeslagen(obj, ea);
+            else
+                this.Close();
         }
 
         public SchetsWin()
         {
             this.schets = new Schets();
             bmp = schets.bitmap;
+            schets.leesFile("../../Tekenelementen.txt");
 
             ISchetsTool[] deTools = { new PenTool()         
                                     , new LijnTool()
@@ -67,7 +77,8 @@ namespace SchetsEditor
             schetscontrol = new SchetsControl();
             schetscontrol.Location = new Point(64, 10);
             schetscontrol.MouseDown += (object o, MouseEventArgs mea) =>
-                                       {   vast=true;  
+                                       {   vast=true;
+                                           opgeslagen = false;  
                                            huidigeTool.MuisVast(schetscontrol, mea.Location); 
                                        };
             schetscontrol.MouseMove += (object o, MouseEventArgs mea) =>
@@ -100,9 +111,10 @@ namespace SchetsEditor
         {   
             ToolStripMenuItem menu = new ToolStripMenuItem("File");
             menu.MergeAction = MergeAction.MatchOnly;
+            menu.DropDownItems.Add("Open", null, this.openen);
+            menu.DropDownItems.Add("Opslaan", null, this.opslaan);
+            menu.DropDownItems.Add("Opslaan als", null, this.opslaanAls);
             menu.DropDownItems.Add("Sluiten", null, this.afsluiten);
-            menu.DropDownItems.Add("Opslaan", null, SchetsOpslaan.opslaan);
-            menu.DropDownItems.Add("Opslaan als", null, SchetsOpslaan.opslaanAls);
             menuStrip.Items.Add(menu);
         }
 
@@ -159,7 +171,7 @@ namespace SchetsEditor
             paneel.Size = new Size(600, 24);
             this.Controls.Add(paneel);
             
-            Button b; Label l; ComboBox cbb;
+            Button b; Label l; ComboBox cbb; TextBox t;
             b = new Button(); 
             b.Text = "Clear";  
             b.Location = new Point(  0, 0); 
@@ -185,6 +197,72 @@ namespace SchetsEditor
                 cbb.Items.Add(k);
             cbb.SelectedIndex = 0;
             paneel.Controls.Add(cbb);
+
+            l = new Label();
+            l.Text = "Lijndikte:";
+            l.Location = new Point(370, 3);
+            l.AutoSize = true;
+            paneel.Controls.Add(l);
+
+            t = new TextBox();
+            t.Location = new Point(430, 0);
+            t.Size = new Size(40, 10);
+            t.AutoSize = true;
+            if (int.TryParse(t.Text, out lijndikte))
+                lijndikte = int.Parse(t.Text);
+            paneel.Controls.Add(t);
+
+            b = new Button();
+            b.Text = "OK";
+            b.Location = new Point(480, 0);
+            b.Size = new Size(40, 20);
+            b.Click += schetscontrol.VeranderLijndikte;
+            paneel.Controls.Add(b);
+        }
+
+        public void opslaan(object o, EventArgs ea)
+        {
+            if (bmptitle == null)
+                opslaanAls(o, ea);
+            else schrijfNaarFile(bmptitle);
+        }
+
+        public void opslaanAls(object o, EventArgs ea)
+        {
+            SaveFileDialog dialoog = new SaveFileDialog();
+            dialoog.Filter = "JPG|*.jpg|BMP|*.bmp|PNG|*.png|Alle files|*.*";
+            dialoog.Title = "Afbeelding opslaan als...";
+            if (dialoog.ShowDialog() == DialogResult.OK)
+            {
+                bmptitle = dialoog.FileName;
+                this.schrijfNaarFile(bmptitle);
+            }
+        }
+
+        public void schrijfNaarFile(string s)
+        {
+            bmp.Save(s);
+            opgeslagen = true;
+        }
+
+        private void openen(object o, EventArgs ea)
+        {
+            OpenFileDialog open = new OpenFileDialog();
+            open.Filter = "JPG|*.jpg|BMP|*.bmp|PNG|*.png|Alle files|*.*";
+            open.Title = "Open...";
+            if (open.ShowDialog() == DialogResult.OK)
+            {
+                schets.bitmap = (Bitmap)Bitmap.FromFile(open.FileName);
+            }
+        }
+
+        private void nietOpgeslagen(object o, EventArgs ea)
+        {
+            DialogResult dialoog = MessageBox.Show("Weet je zeker dat je wilt afsluiten? Er zijn niet-opgeslagen veranderingen.", "Exit", MessageBoxButtons.YesNo);
+            if (dialoog == DialogResult.Yes)
+                this.Close();
+            else if (dialoog == DialogResult.No)
+                return;
         }
     }
 }
