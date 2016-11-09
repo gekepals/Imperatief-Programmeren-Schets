@@ -235,21 +235,13 @@ namespace SchetsEditor
             if (dialoog.ShowDialog() == DialogResult.OK)
             {
                 bmptitle = dialoog.FileName;
-                this.schrijfNaarFile(bmptitle);
-                
+                schrijfNaarFile(bmptitle);
             }
         }
 
         public void schrijfNaarFile(string s)
         {
-            Bitmap nieuw = new Bitmap(bmp,this.Width,this.Height);
-            Graphics gr = Graphics.FromImage(nieuw);
-            gr.FillRectangle(Brushes.White, 0, 0, nieuw.Width, nieuw.Height);
-            //this.DrawToBitmap(nieuw, new Rectangle(0, 0, nieuw.Width, nieuw.Height));
-            gr.DrawImage(nieuw, new Rectangle(0, 0, this.Width, this.Height));
-            bmp = nieuw;
-            bmp.Save(s);
-            opgeslagen = true;
+            this.schetscontrol.schets.bitmap.Save(bmptitle);
         }
 
         private void openen(object o, EventArgs ea)
