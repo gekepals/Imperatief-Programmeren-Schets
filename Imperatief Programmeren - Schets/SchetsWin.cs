@@ -13,7 +13,6 @@ namespace SchetsEditor
     {
         string bmptitle;
         Schets schets;
-        Bitmap bmp;
         MenuStrip menuStrip;
         SchetsControl schetscontrol;
         ISchetsTool huidigeTool;
@@ -55,7 +54,7 @@ namespace SchetsEditor
         public SchetsWin()
         {
             this.schets = new Schets();
-            bmp = schets.bitmap;
+            //bmp = schets.bitmap;
             schets.leesFile("../../Tekenelementen.txt");
 
             ISchetsTool[] deTools = { new PenTool()         
@@ -224,7 +223,10 @@ namespace SchetsEditor
         {
             if (bmptitle == null)
                 opslaanAls(o, ea);
-            else schrijfNaarFile(bmptitle);
+            else
+            {
+                schrijfNaarFile(bmptitle);
+            }
         }
 
         public void opslaanAls(object o, EventArgs ea)
@@ -235,24 +237,29 @@ namespace SchetsEditor
             if (dialoog.ShowDialog() == DialogResult.OK)
             {
                 bmptitle = dialoog.FileName;
-                this.schrijfNaarFile(bmptitle);
+                schrijfNaarFile(bmptitle);
             }
         }
 
         public void schrijfNaarFile(string s)
         {
-            bmp.Save(s);
+            this.schetscontrol.schets.bitmap.Save(s);
             opgeslagen = true;
         }
 
-        private void openen(object o, EventArgs ea)
+        public void openen(object o, EventArgs ea)
         {
             OpenFileDialog open = new OpenFileDialog();
             open.Filter = "JPG|*.jpg|BMP|*.bmp|PNG|*.png|Alle files|*.*";
             open.Title = "Open...";
             if (open.ShowDialog() == DialogResult.OK)
             {
-                schets.bitmap = (Bitmap)Bitmap.FromFile(open.FileName);
+                Bitmap bmp;
+                bmptitle = open.SafeFileName;
+                bmp = (Bitmap)Image.FromFile(open.FileName);
+                Graphics gr = Graphics.FromImage(this.schetscontrol.schets.bitmap);
+                gr.DrawImage(bmp, 0, 0);
+                this.schetscontrol.Invalidate();
             }
         }
 
