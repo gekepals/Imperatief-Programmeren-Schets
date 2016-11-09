@@ -14,12 +14,13 @@ namespace SchetsEditor
         string bmptitle;
         Schets schets;
         MenuStrip menuStrip;
+        MenuStrip menuStrip2;
         SchetsControl schetscontrol;
         ISchetsTool huidigeTool;
         Panel paneel;
         bool vast;
         bool opgeslagen;
-        public int lijndikte;
+        public string invoer;
 
         ResourceManager resourcemanager
             = new ResourceManager("SchetsEditor.Properties.Resources"
@@ -54,7 +55,6 @@ namespace SchetsEditor
         public SchetsWin()
         {
             this.schets = new Schets();
-            //bmp = schets.bitmap;
             schets.leesFile("../../Tekenelementen.txt");
 
             ISchetsTool[] deTools = { new PenTool()         
@@ -67,8 +67,11 @@ namespace SchetsEditor
                                     , new GumTool()
                                     };
             String[] deKleuren = { "Black", "Red", "Green", "Blue"
-                                 , "Yellow", "Magenta", "Cyan" 
+                                 , "Yellow", "Magenta", "Cyan",
+                                 "Gray", "Chocolate",  "Beige", 
+                                 "Purple", "Salmon"
                                  };
+            String[] deDiktes = { "1", "2", "3", "4", "5", "7", "10", "15", "20", "25", "30", "40", "50" };
 
             this.ClientSize = new Size(700, 500);
             huidigeTool = deTools[0];
@@ -97,11 +100,14 @@ namespace SchetsEditor
             menuStrip = new MenuStrip();
             menuStrip.Visible = false;
             this.Controls.Add(menuStrip);
+            menuStrip2 = new MenuStrip();
+            menuStrip2.Visible = false;
+            this.Controls.Add(menuStrip2);
             this.maakFileMenu();
             this.maakToolMenu(deTools);
-            this.maakAktieMenu(deKleuren);
+            this.maakAktieMenu(deKleuren, deDiktes);
             this.maakToolButtons(deTools);
-            this.maakAktieButtons(deKleuren);
+            this.maakAktieButtons(deKleuren, deDiktes);
             this.Resize += this.veranderAfmeting;
             this.veranderAfmeting(null, null);
         }
@@ -131,7 +137,7 @@ namespace SchetsEditor
             menuStrip.Items.Add(menu);
         }
 
-        private void maakAktieMenu(String[] kleuren)
+        private void maakAktieMenu(String[] kleuren, String[] deDiktes)
         {   
             ToolStripMenuItem menu = new ToolStripMenuItem("Aktie");
             menu.DropDownItems.Add("Clear", null, schetscontrol.Schoon );
@@ -141,6 +147,12 @@ namespace SchetsEditor
                 submenu.DropDownItems.Add(k, null, schetscontrol.VeranderKleurViaMenu);
             menu.DropDownItems.Add(submenu);
             menuStrip.Items.Add(menu);
+
+            ToolStripMenuItem submenu_diktes = new ToolStripMenuItem("Kies dikte");
+            foreach (string d in deDiktes)
+                submenu_diktes.DropDownItems.Add(d, null, schetscontrol.VeranderLijndikte);
+            menu.DropDownItems.Add(submenu_diktes);
+            menuStrip2.Items.Add(menu);
         }
 
         private void maakToolButtons(ICollection<ISchetsTool> tools)
@@ -164,13 +176,13 @@ namespace SchetsEditor
             }
         }
 
-        private void maakAktieButtons(String[] kleuren)
+        private void maakAktieButtons(String[] kleuren, String[] deDiktes)
         {   
             paneel = new Panel();
             paneel.Size = new Size(600, 24);
             this.Controls.Add(paneel);
             
-            Button b; Label l; ComboBox cbb; TextBox t;
+            Button b; Label l; ComboBox cbb, cb;
             b = new Button(); 
             b.Text = "Clear";  
             b.Location = new Point(  0, 0); 
@@ -196,27 +208,24 @@ namespace SchetsEditor
                 cbb.Items.Add(k);
             cbb.SelectedIndex = 0;
             paneel.Controls.Add(cbb);
-
+            
             l = new Label();
             l.Text = "Lijndikte:";
             l.Location = new Point(370, 3);
             l.AutoSize = true;
             paneel.Controls.Add(l);
 
-            t = new TextBox();
-            t.Location = new Point(430, 0);
-            t.Size = new Size(40, 10);
-            t.AutoSize = true;
-            if (int.TryParse(t.Text, out lijndikte))
-                lijndikte = int.Parse(t.Text);
-            paneel.Controls.Add(t);
+            cb = new ComboBox();
+            cb.Location = new Point(430, 0);
+            cb.Size = new Size(50, 10);
+            cb.DropDownStyle = ComboBoxStyle.DropDownList;
+            cb.SelectedValueChanged += schetscontrol.VeranderLijndikte;
+            foreach (string dikte in deDiktes)
+                cb.Items.Add(dikte);
+            cb.SelectedIndex = 0;
+            paneel.Controls.Add(cb);
 
-            b = new Button();
-            b.Text = "OK";
-            b.Location = new Point(480, 0);
-            b.Size = new Size(40, 20);
-            b.Click += schetscontrol.VeranderLijndikte;
-            paneel.Controls.Add(b);
+
         }
 
         public void opslaan(object o, EventArgs ea)

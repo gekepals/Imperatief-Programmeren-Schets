@@ -16,12 +16,14 @@ namespace SchetsEditor
     {
         protected Point startpunt;
         protected Brush kwast;
+        protected int dikte = 3;
 
         public virtual void MuisVast(SchetsControl s, Point p)
         {   startpunt = p;
         }
         public virtual void MuisLos(SchetsControl s, Point p)
         {   kwast = new SolidBrush(s.PenKleur);
+            dikte = s.lijndikte;
         }
         public abstract void MuisDrag(SchetsControl s, Point p);
         public abstract void Letter(SchetsControl s, char c);
@@ -96,8 +98,7 @@ namespace SchetsEditor
 
         public override void Bezig(Graphics g, Point p1, Point p2)
         {
-            SchetsControl s = new SchetsControl();
-            g.DrawRectangle(MaakPen(kwast, s.lijndikte), TweepuntTool.Punten2Rechthoek(p1, p2));
+            g.DrawRectangle(MaakPen(kwast, dikte), TweepuntTool.Punten2Rechthoek(p1, p2));
         }
     }
     
@@ -116,8 +117,7 @@ namespace SchetsEditor
 
         public override void Bezig(Graphics g, Point p1, Point p2)
         {
-            SchetsControl s = new SchetsControl();
-            g.DrawEllipse(MaakPen(kwast, s.lijndikte), TweepuntTool.Punten2Rechthoek(p1, p2));
+            g.DrawEllipse(MaakPen(kwast, dikte), TweepuntTool.Punten2Rechthoek(p1, p2));
         }
     }
 
@@ -137,8 +137,7 @@ namespace SchetsEditor
 
         public override void Bezig(Graphics g, Point p1, Point p2)
         {
-            SchetsControl s = new SchetsControl();
-            g.DrawLine(MaakPen(this.kwast, s.lijndikte), p1, p2);
+            g.DrawLine(MaakPen(this.kwast, dikte), p1, p2);
         }
     }
 
