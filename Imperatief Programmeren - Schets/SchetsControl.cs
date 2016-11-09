@@ -58,12 +58,10 @@ namespace SchetsEditor
 
         public void VeranderLijndikte(object obj, EventArgs ea)
         {
-            SchetsWin schetswin = new SchetsWin();
-            lijndikte = 3;
-            if (schetswin.lijndikte > 0 && schetswin.lijndikte < 20)
-                lijndikte = schetswin.lijndikte;
-            else
-                MessageBox.Show("Voer een geldige waarde in!");
+            lijndikte = int.Parse(((ComboBox)obj).Text);
+
+            this.Invalidate();
         }
+
     }
 }

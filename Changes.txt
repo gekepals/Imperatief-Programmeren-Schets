@@ -33,3 +33,10 @@
 	- in SchetsControl, nieuwe methode 'VeranderLijndikte' die de ingevoerde waarde van de tekstbox neemt
 	- variabele lijndikte toegevoegd in de toolklassen, op basis van de uitkomst van VeranderLijndikte
 > note: werkt niet. Toont nu bij elke klik op OK de waarschuwings-tekstbox
+
+09-11-2016: veranderen lijndikte + meer kleuren toegevoegd
+- meer kleuren toegevoegd aan de array deKleuren in SchetsWin
+- mogelijkheid tot het veranderen van de lijndikte:
+	- in klasse SchetsWin een nieuwe ComboBox toegevoegd, die gebruikt maakt van een nieuwe array deDiktes
+	- deze verbonden met methode VeranderLijndikte in klasse SchetsControl, die de invoer van de ComboBox als nieuwe waarde voor lijndikte neemt
+	- in de verschillende toolklasse de diktevariabele die gebruikt wordt in methode MaakPen aangepast aan de variabele uit VeranderLijndikte
